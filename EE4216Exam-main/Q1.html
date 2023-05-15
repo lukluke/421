@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<!--
+Your Answer for Question 1(b):
+
+
+Both Promise pattern and the async/await pattern are used for dealing with asynchronous code, which Promise pattern use 'then, catch' and async/await pattern use 'await, async' keywords.
+
+The main difference between the Promise pattern and the async/await pattern is in the syntax. 
+The Promise pattern uses callbacks and the `then` and `catch` methods to handle asynchronous operations, while the async/await pattern uses the `await` keyword and async functions. 
+The async/await pattern can make it easier to write and read asynchronous code, for example dealing with multiple asynchronous API call operations when the page is loaded at the first time. 
+However, the Promise pattern can be more flexible in some cases, e.g. handle multiple callbacks at the same time.
+
+-->
+<html>
+<head>
+  <title>Tic Tac Toe</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+ <style>
+    #app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .board {
+      display: flex;
+      flex-wrap: wrap;
+      width: 306px;
+      height: 306px;
+      margin: 0 auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      font-size: 72px;
+      text-align: center;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Write your Vue template code here to display the game board. -->
+
+      <h1>Tic Tac Toe</h1>
+      <div class="board">
+        <div class="cell" v-for="(cell, index) in cells" :key="index" @click="placeMarker(index)" :class="{ 'x': cell === 'X', 'o': cell === 'O', 'disabled': cell !== ' ' || gameOver }">
+          {{ cell }}
+        </div>
+      </div>
+      <div v-if="winner">
+        {{ winner }} wins!
+      </div>
+      <div v-else-if="gameOver">
+        Game over!
+      </div>
+      <button v-if="gameOver" @click="resetGame">Play again</button>
+	
+	
+	
+	
+  </div>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        cells: Array(9).fill(''),
+        currentPlayer: 'X',
+        winner: null,
+        gameOver: false
+      },
+      methods: {
+        placeMarker(index) {
+          // place a marker at the index location
+            if (this.cells[index] === "" && !this.gameOver) {
+                this.cells.splice(index, 1, this.currentPlayer);
+                if (this.checkWin()) return; 
+                if (this.checkTie()) return;
+                this.currentPlayer = this.currentPlayer == "X" ? "O" : "X";
+            }
+        },
+        checkWin() {
+          // return a boolean to indicate if the current player wins
+		  const lines = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+            for (let i = 0; i < lines.length; i++) {
+                const [line1, line2, line3] = lines[i];
+                if (
+                    this.cells[line1] !== "" &&
+                    this.cells[line1] === this.cells[line2] &&
+                    this.cells[line1] === this.cells[line3]
+                ) {
+                    this.winner = this.currentPlayer;
+                    this.gameOver = true;
+                    return true;
+                }
+            }
+		  
+        },
+        checkTie() {
+          // return a boolean to indicate if the game ends with a tie
+            if (this.cells.every((cell) => cell !== "")) {
+                this.gameOver = true;
+                return true
+            }
+        },
+        resetGame() {
+          // reset the game to its initial condition
+            this.cells = Array(9).fill("");
+            this.currentPlayer = "X";
+            this.winner = null;
+            this.gameOver = false;
+  
+        }
+        }
+
+      }
+    );
+  </script>
+</body>
+</html>

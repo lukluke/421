@@ -1,0 +1,67 @@
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+/**
+ * The entity class for the table "movies".
+ * 
+ */
+@Entity
+@Table(name = "movies")
+public class Movie {
+    @Id
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "m_name")
+    private String name;
+
+    @Column(name = "m_year")
+    private int year;
+
+    @Column(name = "m_rank")
+    private float rank;
+
+    public Movie() {}
+
+    public Movie(int id, String name, int year, float rank) {
+        this.id = id;
+        this.name = name;
+        this.year = year;
+        this.rank = rank;
+    }
+
+    // getters and setters for id, name, year, and rank
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public float getRank() {
+        return rank;
+    }
+
+    public void setRank(float rank) {
+        this.rank = rank;
+    }
+}

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<!--
+Your Answer for Question 2(d):
+
+
+Advantages:
+1. Improved scalability:
+Decoupling the frontend and backend allows the two components to be scaled independently of each other, able to add more servers if there are any performance issue on the frondend or the backend.
+
+2. Improved maintainability:
+Easier to maintain and modify each component separately without affecting the other.
+
+3. Improved security:
+Decoupling the frontend and backend allows you to apply different security measures to each component
+
+Disadvantages:
+1. Increased complexity:
+Adds an extra layer of complexity to the application architecture, which can be difficult to manage and debug, need more communications between frond-end and backend developers
+
+2. Increased development time:
+Need more planning and design time to define the API, and the object
+
+
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>EE4216 Exam</title>
+    </head>
+    <body>
+        <div>
+            <h1>IMDB Movies</h1>
+            <!-- Question 2(c) - dynamically generate page links here -->
+            <div th:if="${totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 1} ? disabled">
+                    <a class="page-link" th:href="@{|/ee4216/exam/movie/page/${currentPage - 1}|}">&laquo;</a>
+                </li>
+                <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:classappend="${pageNum == currentPage} ? active">
+                    <a class="page-link" th:href="@{|/ee4216/exam/movie/page/${pageNum}|}" th:text="${pageNum}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? disabled">
+                    <a class="page-link" th:href="@{|/ee4216/exam/movie/page/${currentPage + 1}|}">&raquo;</a>
+                </li>
+            </ul>
+
+            
+            
+            
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Movie Name</th>
+                        <th>Year</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="movie : ${movies}">
+                        <td th:text="${movie.id}"></td>
+                        <td th:text="${movie.name}"></td>
+                        <td th:text="${movie.year}"></td>
+                        <td th:text="${movie.rank}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
